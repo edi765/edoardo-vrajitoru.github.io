@@ -524,7 +524,7 @@
 
         .dropdown-divider {
             border-color: rgba(255, 255, 255, 0.1);
-            margin: 5px 0;
+            margin: 0.5rem 0;
         }
 
         .text-danger {
@@ -558,6 +558,30 @@
                 display: inline;
             }
         }
+
+        /* Logout Button Style */
+        .dropdown-menu .dropdown-item[onclick="logout(event)"] {
+            color: #ff4d4d;
+        }
+
+        .dropdown-menu .dropdown-item[onclick="logout(event)"] i {
+            color: #ff4d4d;
+        }
+
+        .dropdown-menu .dropdown-item[onclick="logout(event)"]:hover {
+            background: rgba(255, 77, 77, 0.1);
+        }
+
+        @keyframes dropdownFade {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
@@ -587,8 +611,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="contact.html">Contact</a>
                     </li>
-                    <li class="nav-item dropdown" id="userDropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle account-btn" href="#" role="button" data-bs-toggle="dropdown" style="display: none;">
                             <i class="fas fa-user-circle"></i>
                             <span id="userName">Cont</span>
                         </a>
@@ -598,8 +622,11 @@
                             <li><a class="dropdown-item" href="certificate.html"><i class="fas fa-certificate"></i> Certificate</a></li>
                             <li><a class="dropdown-item" href="setari.html"><i class="fas fa-cog"></i> Setări</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Deconectare</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="logout(event)"><i class="fas fa-sign-out-alt"></i> Deconectare</a></li>
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link auth-btn" href="autentificare.html">Autentificare</a>
                     </li>
                 </ul>
             </div>
@@ -623,7 +650,7 @@
 
                 <!-- Login Form -->
                 <div id="login" class="auth-form">
-                    <form id="loginForm" class="needs-validation" novalidate>
+                    <form id="loginForm" onsubmit="handleLogin(event)" class="needs-validation" novalidate>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" required>
@@ -765,9 +792,16 @@
         // Funcție pentru autentificare
         function handleLogin(event) {
             event.preventDefault();
-            const email = event.target.querySelector('input[name="email"]').value;
-            const password = event.target.querySelector('input[name="password"]').value;
+            console.log('Încercare de autentificare...'); // Debug
+
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const email = emailInput.value;
+            const password = passwordInput.value;
             const rememberMe = document.getElementById('rememberMe').checked;
+
+            console.log('Email introdus:', email); // Debug
+            console.log('Parolă introdusă:', password ? '***' : 'lipsă'); // Debug
 
             if (!validateEmail(email)) {
                 showError('Vă rugăm să introduceți o adresă de email validă.', 'login');
@@ -775,7 +809,10 @@
             }
 
             const users = JSON.parse(localStorage.getItem('users') || '[]');
+            console.log('Utilizatori găsiți:', users.length); // Debug
+
             const user = users.find(u => u.email === email && u.password === password);
+            console.log('Utilizator găsit:', user ? 'da' : 'nu'); // Debug
 
             if (!user) {
                 showError('Email sau parolă incorectă.', 'login');
@@ -791,13 +828,18 @@
                 }
             };
 
+            console.log('Salvare authState:', authState); // Debug
+
             if (rememberMe) {
                 localStorage.setItem('authState', JSON.stringify(authState));
+                console.log('Salvat în localStorage'); // Debug
             } else {
                 sessionStorage.setItem('authState', JSON.stringify(authState));
+                console.log('Salvat în sessionStorage'); // Debug
             }
 
             // Redirecționează către pagina principală
+            console.log('Redirecționare către index.html...'); // Debug
             window.location.href = '../index.html';
         }
 
