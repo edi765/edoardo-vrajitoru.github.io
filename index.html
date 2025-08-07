@@ -6,6 +6,7 @@
     <title>VEG Media Network - Platformă Educațională</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/chatbot.css">
     <style>
         :root {
             --primary-color: #1976D2;
@@ -470,6 +471,7 @@
             font-weight: 800;
             background: linear-gradient(45deg, var(--text-color), var(--primary-color));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
         }
@@ -765,6 +767,189 @@
         .card-body {
             padding: 2rem;
         }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Chatbot Styles */
+        .chatbot-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .chatbot-button i {
+            font-size: 24px;
+            color: #0f2649;
+        }
+
+        .chatbot-container {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background: rgba(15, 38, 73, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chatbot-header {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px 15px 0 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chatbot-header h4 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-close:hover {
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .chatbot-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin-bottom: 5px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .bot-message {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .user-message {
+            background: rgba(255, 255, 255, 0.9);
+            color: #0f2649;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chatbot-input {
+            padding: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 10px;
+        }
+
+        .chatbot-input input {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            outline: none;
+        }
+
+        .chatbot-input input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .chatbot-input button {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-input button:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-input button i {
+            color: #0f2649;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scrollbar Styles for Chat Messages */
+        .chatbot-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -773,7 +958,9 @@
         <div class="container">
             <a class="navbar-brand" href="index.html">
                 <img src="images/logo.png" alt="VEG Media Network Logo">
-                <div>VEG Media Network - Platformă Educațională</div>
+                <div>
+                    VEG Media Network - Platformă Educațională
+                </div>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -781,13 +968,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Acasă</a>
+                        <a class="nav-link active" href="index.html">Acasă</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="pages/cursuri.html">Cursuri</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/despre.html">Despre</a>
+                        <a class="nav-link" href="pages/despre.html">Despre Noi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="pages/contact.html">Contact</a>
@@ -801,6 +988,7 @@
                             <li><a class="dropdown-item" href="pages/profil.html"><i class="fas fa-user"></i> Profilul meu</a></li>
                             <li><a class="dropdown-item" href="pages/cursuri-mele.html"><i class="fas fa-book"></i> Cursurile mele</a></li>
                             <li><a class="dropdown-item" href="pages/certificate.html"><i class="fas fa-certificate"></i> Certificate</a></li>
+                            <li><a class="dropdown-item" href="pages/conținut-interactiv.html"><i class="fas fa-gamepad"></i> Conținut Interactiv</a></li>
                             <li><a class="dropdown-item" href="pages/setari.html"><i class="fas fa-cog"></i> Setări</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#" onclick="logout(event)"><i class="fas fa-sign-out-alt"></i> Deconectare</a></li>
@@ -946,9 +1134,9 @@
                 <div class="col-lg-4 col-md-4 mb-4">
                     <h6 class="text-white mb-3">Contact</h6>
                     <ul class="list-unstyled footer-contact">
-                        <li><i class="fas fa-envelope me-2"></i>contact@vegmedianetwork.ro</li>
-                        <li><i class="fas fa-phone me-2"></i>+40 123 456 789</li>
-                        <li><i class="fas fa-map-marker-alt me-2"></i>București, România</li>
+                        <li><i class="fas fa-envelope me-2"></i>vegmedianetwork@gmail.com</li>
+                        <li><i class="fas fa-phone me-2"></i>0759388695</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i>Liceul "Regina Maria" Dorohoi</li>
                     </ul>
                     <div class="social-links mt-3">
                         <a href="#" class="me-2"><i class="fab fa-facebook"></i></a>
@@ -966,7 +1154,33 @@
         </div>
     </footer>
 
+    <!-- Chatbot -->
+    <button class="chatbot-button" onclick="toggleChat()">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <h4><i class="fas fa-robot me-2"></i>Asistent Virtual</h4>
+            <button class="chatbot-close" onclick="toggleChat()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-messages">
+            <div class="message bot-message">
+                Bună! Sunt asistentul virtual al platformei VEG Media Network. Cu ce te pot ajuta?
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" placeholder="Scrie un mesaj..." id="chatInput" onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/chatbot.js"></script>
     <script>
         // Verifică starea autentificării
         function checkAuthStatus() {
@@ -975,37 +1189,31 @@
             const authBtn = document.querySelector('.auth-btn');
             const userName = document.getElementById('userName');
             
-            console.log('Status autentificare:', authState.isAuthenticated);
-            console.log('Date utilizator:', authState.user);
+            console.log('Verificare status autentificare:', authState);
             
             if (authState.isAuthenticated) {
                 if (userDropdown) {
                     userDropdown.style.display = 'block';
-                    console.log('Buton cont vizibil');
+                    console.log('Afișare buton cont');
                 }
                 if (authBtn) {
                     authBtn.style.display = 'none';
-                    console.log('Buton autentificare ascuns');
+                    console.log('Ascundere buton autentificare');
                 }
                 
-                try {
-                    const displayName = authState.user?.name || authState.user?.numeComplet || 'Contul meu';
-                    if (userName) {
-                        userName.textContent = displayName;
-                        console.log('Nume utilizator setat:', displayName);
-                    }
-                } catch (error) {
-                    console.error('Eroare la setarea numelui utilizatorului:', error);
-                    if (userName) userName.textContent = 'Contul meu';
+                if (userName && authState.user) {
+                    const displayName = authState.user.name || authState.user.numeComplet || 'Contul meu';
+                    userName.textContent = displayName;
+                    console.log('Nume utilizator setat:', displayName);
                 }
             } else {
                 if (userDropdown) {
                     userDropdown.style.display = 'none';
-                    console.log('Buton cont ascuns');
+                    console.log('Ascundere buton cont');
                 }
                 if (authBtn) {
                     authBtn.style.display = 'block';
-                    console.log('Buton autentificare vizibil');
+                    console.log('Afișare buton autentificare');
                 }
             }
         }
@@ -1013,34 +1221,21 @@
         // Funcție pentru deconectare
         function logout(e) {
             if (e) e.preventDefault();
-            console.log('Deconectare inițiată...');
-            
+            console.log('Deconectare...');
             localStorage.removeItem('authState');
             sessionStorage.removeItem('authState');
-            
             checkAuthStatus();
-            
-            console.log('Redirecționare către pagina de autentificare...');
             window.location.href = 'pages/autentificare.html';
-            
             return false;
         }
 
-        // Verifică starea de autentificare la încărcarea paginii
+        // Inițializare la încărcarea paginii
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM încărcat, verificare status...');
-            
-            // Verifică starea inițială
+            console.log('DOM încărcat, verificare autentificare...');
             checkAuthStatus();
-            
-            // Adaugă event listener pentru butonul de deconectare
-            const logoutBtn = document.querySelector('.dropdown-item[href="#"]:not([onclick])');
-            if (logoutBtn) {
-                logoutBtn.onclick = logout;
-            }
         });
 
-        // Verifică periodic starea de autentificare
+        // Verificare periodică
         setInterval(checkAuthStatus, 1000);
     </script>
 </body>
